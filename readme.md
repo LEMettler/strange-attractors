@@ -47,9 +47,10 @@ would create the subdirectory `data/foo` with 3 different attractors, that each 
 `2_expand_one_attractor.py` will prompt you for a directly `name`, the specific `index` you want to further develop and the number of `steps`. E.g.
 
 ```python
-python3 1_find_multiple_attractors.py foo 1 1000000
+python3 2_expand_one_attractor.py foo 1 1000000
 ```
 will find $10^6$ more points for the attractor that corresponds to index $1$ for the project `foo`. Additionally, a processing visualization is stored in `data/foo/py5_plots`.<br>
+Furthermore you can change between b/w and noise-colors with the `colorful` parameter in `2_expand_one_attractor.py`.
 
 
 
