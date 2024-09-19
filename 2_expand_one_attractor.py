@@ -11,6 +11,8 @@ import py5
 import subprocess as sp
 import sys
 
+colorful = True
+
 
 def scale(arr, max_length):
     arr = (arr - np.min(arr))/np.max(arr-np.min(arr)) # [0, 1]
@@ -73,22 +75,36 @@ plt.close()
 
 
 
+def color_noise(x,y):
+    rgb = []
+    for speed in [0.004, 0.002, 0.0021]:
+        rgb.append(255*py5.noise(x*speed,y*speed))
+    return rgb
 # py5 version
 
 sp.run(["mkdir", dir_py5_plot])
 
 def setup():
-    py5.size(1000, 1000)
+    py5.size(2000, 2000)
+
     py5.background(20)
 
     xvals = scale(x_list, py5.width)
     yvals = py5.height-scale(y_list, py5.height)
-    points = np.array([xvals, yvals]).T
 
-    py5.stroke(240)
-    py5.points(points)
+    if colorful:
 
-    py5.save(f'{dir_py5_plot}/{attractor_index}.png')
+        for xv, yv in zip(xvals, yvals):
+            rgb = color_noise(xv, yv)
+            py5.stroke(*rgb)
+            py5.point(xv, yv)
+        py5.save(f'{dir_py5_plot}/{attractor_index}-color.png')
+
+    else:
+        py5.stroke(220)
+        points = np.array([xvals, yvals]).T
+        py5.points(points)
+        py5.save(f'{dir_py5_plot}/{attractor_index}-bw.png')
 
 py5.run_sketch()
 
