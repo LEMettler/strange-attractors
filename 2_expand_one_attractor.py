@@ -12,11 +12,12 @@ import subprocess as sp
 import sys
 import time
 
-colorful = True
+colorful = False
 plot_only = True
 recompile = False
 #img_width, img_height = 1920, 1080
-img_width, img_height = 1000, 1000
+img_width, img_height = 2000, 1000
+
 
 def scale(arr, max_length):
     arr = (arr - np.min(arr))/np.max(arr-np.min(arr)) # [0, 1]
