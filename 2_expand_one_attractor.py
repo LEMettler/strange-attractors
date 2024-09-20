@@ -10,9 +10,12 @@ import matplotlib.pyplot as plt
 import py5
 import subprocess as sp
 import sys
+import time
 
-colorful = True
-
+colorful = False
+plot_only = False
+recompile = False
+img_width, img_height = 2*1920, 2*1080
 
 def scale(arr, max_length):
     arr = (arr - np.min(arr))/np.max(arr-np.min(arr)) # [0, 1]
@@ -49,7 +52,22 @@ except (ValueError, IndexError):
 
 
 # run c++ script to further calculate
-sp.run(["./cpp-scripts/extensive-attractor-calculation", run_name, str(attractor_index), str(n_steps)])
+
+if not plot_only:
+
+    #recompile c++ script with function
+    if recompile: 
+        cmd = "g++ cpp-scripts/extensive-attractor-calculation.cc function.cc -o cpp-scripts/extensive-attractor-calculation"  
+        try:
+            result = sp.run(cmd, shell=True, check=True, capture_output=True, text=True)
+            print('Success compiling function!')
+        except sp.CalledProcessError as e:
+            print(f"Error recompiling: {e}")
+            print("Output: ", e.stdout)
+            print("Error: ", e.stderr)
+            sys.exit(1)
+
+    sp.run(["./cpp-scripts/extensive-attractor-calculation", run_name, str(attractor_index), str(n_steps)])
 
 
 # drectories
@@ -77,7 +95,8 @@ plt.close()
 
 def color_noise(x,y):
     rgb = []
-    for speed in [0.004, 0.002, 0.0021]:
+    #for speed in [0.004, 0.002, 0.0021]:
+    for speed in [0.0009, 0.0004, 0.0005]:
         rgb.append(255*py5.noise(x*speed,y*speed))
     return rgb
 # py5 version
@@ -85,7 +104,8 @@ def color_noise(x,y):
 sp.run(["mkdir", dir_py5_plot])
 
 def setup():
-    py5.size(2000, 2000)
+    py5.size(img_width, img_height)
+    py5.noise_seed(int(time.time()))
 
     py5.background(20)
 
@@ -96,17 +116,18 @@ def setup():
 
         for xv, yv in zip(xvals, yvals):
             rgb = color_noise(xv, yv)
-            py5.stroke(*rgb)
+            py5.no_stroke()
+            py5.stroke(*rgb, 70)
             py5.point(xv, yv)
         py5.save(f'{dir_py5_plot}/{attractor_index}-color.png')
 
     else:
-        py5.stroke(220)
+        py5.stroke(220, 70)
         points = np.array([xvals, yvals]).T
         py5.points(points)
         py5.save(f'{dir_py5_plot}/{attractor_index}-bw.png')
 
-py5.run_sketch()
+py5.run_sketch(block=False)
 
 
 

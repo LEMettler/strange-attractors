@@ -11,6 +11,9 @@ import subprocess as sp
 import sys
 
 
+recompile = True
+
+
 def get_input():
     # fallback if parameters are not provided
     run_name = input('Run name: ')
@@ -43,6 +46,19 @@ dir_plots =dir_run + '/plots'
 # create directory
 sp.run(["mkdir", dir_run, dir_coeffs, dir_points, dir_plots])
 
+
+#recompile c++ script with function
+if recompile: 
+    cmd = "g++ cpp-scripts/attractor-calculation.cc function.cc -o cpp-scripts/attractor-calculation"  
+    try:
+        result = sp.run(cmd, shell=True, check=True, capture_output=True, text=True)
+        print('Success compiling function!')
+    except sp.CalledProcessError as e:
+        print(f"Error recompiling: {e}")
+        print("Output: ", e.stdout)
+        print("Error: ", e.stderr)
+        sys.exit(1)
+        
 
 # call script
 sp.run(["./cpp-scripts/attractor-calculation", run_name, str(n_attractors), str(n_steps)])
