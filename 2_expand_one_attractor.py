@@ -12,10 +12,11 @@ import subprocess as sp
 import sys
 import time
 
-colorful = False
-plot_only = False
+colorful = True
+plot_only = True
 recompile = False
-img_width, img_height = 2*1920, 2*1080
+#img_width, img_height = 1920, 1080
+img_width, img_height = 1000, 1000
 
 def scale(arr, max_length):
     arr = (arr - np.min(arr))/np.max(arr-np.min(arr)) # [0, 1]
@@ -96,7 +97,7 @@ plt.close()
 def color_noise(x,y):
     rgb = []
     #for speed in [0.004, 0.002, 0.0021]:
-    for speed in [0.0009, 0.0004, 0.0005]:
+    for speed in [0.009, 0.0004, 0.0005]:
         rgb.append(255*py5.noise(x*speed,y*speed))
     return rgb
 # py5 version
