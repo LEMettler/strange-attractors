@@ -1,6 +1,6 @@
 #
 # Created on:  Thu Sep 19 2024
-# By:  Lukas Mettler (lukas.mettler@student.kit.edu)
+# By:  Lukas Mettler
 # https://github.com/LEMettler
 #
 
