@@ -33,7 +33,7 @@ A mixture of python scripts to conveniently create numerous random strange attra
 
 1. **Find multiple attractors**:<br>
 
-Call `python3 1_find_multiple_attractors.py`. You will be prompted to enter a `name`, `number of attractors` to find and the `steps` that each attractor should be calculated for. You will find [matplotlib](https://matplotlib.org/) visualizations in the subdirectory `data/[name]/plots`. <br>
+Call `python3 1_find_multiple_attractors.py`. You will be prompted to enter a `name`, `number of attractors` to find and the `steps` that each attractor should be calculated for. Afterwards, you will find [matplotlib](https://matplotlib.org/) visualizations in the subdirectory `data/[name]/plots`. <br>
 Alternatively you can pass these parameters directly. E.g.
 
 ```python
@@ -44,7 +44,7 @@ would create the subdirectory `data/foo` with 3 different attractors, that each 
 
 2. **Adding more points and processing drawing**:<br>
 
-`2_expand_one_attractor.py` will prompt you for a directly `name`, the specific `index` you want to further develop and the number of `steps`. E.g.
+`2_expand_one_attractor.py` will prompt you for a directory `name`, the specific `index` you want to further develop and the number of `steps`. E.g.
 
 ```python
 python3 2_expand_one_attractor.py foo 1 1000000
